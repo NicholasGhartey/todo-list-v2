@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Test stage"
+
 source venv/bin/activate
 python3 -m pytest \
    --cov=application \
