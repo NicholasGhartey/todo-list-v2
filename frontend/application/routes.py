@@ -22,30 +22,18 @@ def create_task():
 
     return render_template("create_task.html", title="Add a new Task", form=form)
 
-# @app.route('/read/allTasks')
-# def read_tasks():
-#     all_tasks = Tasks.query.all()
-#     tasks_dict = {"tasks": []}
-#     for task in all_tasks:
-#         tasks_dict["tasks"].append(
-#             {
-#                 "description": task.description,
-#                 "completed": task.completed
-#             }
-#         )
-#     return tasks_dict
 
-# @app.route('/update/task/<int:id>', methods=['GET','POST'])
-# def update_task(id):
-#     form = TaskForm()
-#     task = Tasks.query.get(id)
+@app.route('/update/task/<int:id>', methods=['GET','POST'])
+def update_task(id):
+    form = TaskForm()
+    task = requests.get(f"http://{backend_host}/read/task/{id}")
 
-#     if request.method == "POST":
-#         task.description = form.description.data
-#         db.session.commit()
-#         return redirect(url_for('home'))
+    if request.method == "POST":
+        response = requests.post(f"http://{backend_host}/update/task/{id}", json={"description": form.description.data})
+    
+        return redirect(url_for('home'))
 
-#     return render_template('update_task.html', task=task, form=form)
+    return render_template('update_task.html', task=task, form=form)
 
 # @app.route('/delete/task/<int:id>')
 # def delete_task(id):
