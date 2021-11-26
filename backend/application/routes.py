@@ -25,8 +25,8 @@ def read_tasks():
     return jsonify(tasks_dict)
 
 
-@app.route('/read/tasks/<int:id>', methods=['GET'])
-def read_tasks(id):
+@app.route('/read/task/<int:id>', methods=['GET'])
+def read_task(id):
     task = Tasks.query.get(id)
     tasks_dict = {
                     "id": task.id,
