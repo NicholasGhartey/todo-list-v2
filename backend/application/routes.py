@@ -2,6 +2,8 @@ from application import app, db
 from application.models import Tasks
 from flask import render_template, request, redirect, url_for, Response, jsonify
 
+backend_host = "todo-app_backend:5000"
+
 @app.route('/create/task', methods=['POST'])
 def create_task():
         package = request.json
