@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        CREATE_SCHEMA = "true"
+        DOCKER_HUB_CREDS = credentials("DOCKER_HUB_CREDS")
         DATABASE_URI = credentials("DATABASE_URI")
     }
     stages {
@@ -15,23 +15,20 @@ pipeline {
                 sh "bash jenkins/test.sh"
             }
         }
-        stage('Create Schema') {
+        stage('Build') {
             steps {
-                script{
-                    if (env.CREATE_SCHEMA == "true") {
-                        sh "bash jenkins/create_schema.sh"
-                    }
-                }
+                sh "bash jenkins/build.sh"
             }
         }
-        stage('Run') {
+          stage('Push') {
             steps {
-                script{
-                    if (env.RUN_APP == "true") {
-                        sh "bash jenkins/run_app.py"
-                    }
-                }
+                sh "bash jenkins/push.sh"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "bash jenkins/deploy.sh"
             }
         }
     }
-}    
+}
