@@ -28,8 +28,8 @@ def update_task(id):
     form = TaskForm()
     task = requests.get(f"http://{backend_host}/read/task/{id}").json()
 
-    if request.method == "PUT":
-        response = requests.post(f"http://{backend_host}/update/task/{id}", json={"description": form.description.data})
+    if request.method == "POST":
+        response = requests.put(f"http://{backend_host}/update/task/{id}", json={"description": form.description.data})
     
         return redirect(url_for('home'))
 
