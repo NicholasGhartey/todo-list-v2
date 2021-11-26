@@ -38,7 +38,6 @@ def update_task(id):
 @app.route('/delete/task/<int:id>')
 def delete_task(id):
     response = requests.delete(f"http://{backend_host}/delete/task/{id}")
-
     return redirect(url_for('home'))
 
 # @app.route('/complete/task/<int:id>')
